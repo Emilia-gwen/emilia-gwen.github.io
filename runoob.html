@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>试试网页</title>
+    <style type="text/css">
+    #div1, #div2 {
+        float:left; 
+        width:100px; 
+        height:35px; 
+        margin:10px;
+        padding:10px;
+        border:1px solid #aaaaaa;
+    }
+    </style>
+    <script>
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+    }
+    var x=document.getElementById("demo");
+    function getLocation()
+    {
+	if (navigator.geolocation)
+	{
+		navigator.geolocation.getCurrentPosition(showPosition,showError);
+	}
+	else
+	{
+		x.innerHTML="该浏览器不支持获取地理位置。";
+	}
+    }
+    function showPosition(position)
+    {
+	x.innerHTML="纬度: " + position.coords.latitude + 
+	"<br>经度: " + position.coords.longitude;	
+    }
+    function showError(error)
+    {
+	switch(error.code) 
+	    {
+		case error.PERMISSION_DENIED:
+			x.innerHTML="用户拒绝对获取地理位置的请求。"
+			break;
+		case error.POSITION_UNAVAILABLE:
+			x.innerHTML="位置信息是不可用的。"
+			break;
+		case error.TIMEOUT:
+			x.innerHTML="请求用户地理位置超时。"
+			break;
+		case error.UNKNOWN_ERROR:
+			x.innerHTML="未知错误。"
+			break;
+	    }
+    }
+    </script>
+</head>
+<body>
+    <h1>标题一</h1>
+    <hr>
+    <h2>标题二</h2>
+    <div style="font-family:verdana;padding:20px;border-radius:10px;border:10px solid #EE872A;">
+    <p><b>段落一</b></p>
+    <p>另一个<br><i>段落</i></p>
+    </div>
+    <p><code>代码</code></p>
+    <p><em>着重信息，就是斜体</em></p>
+    <p><ins>插入信息，就是下划线</ins></p>
+    <a href="https://www.runoob.com">这是一个链接</a><br>
+    <img src="/images/logo.png" width="258" height="39" />
+    <p><a href="https://www.example.com" style="color: red;">红色链接</a></p>
+    <iframe src="/learnhtml/runoob.html" width="400" height="200"></iframe>
+    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <img src="/images/logo.png" draggable="true" ondragstart="drag(event)" id="drag1" width="88" height="31"></div>
+    <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <p id="demo">点击按钮获取您当前坐标：</p>
+    <button onclick="getLocation()">点我</button>
+</body>
+</html>
